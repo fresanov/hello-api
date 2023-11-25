@@ -57,13 +57,6 @@ jobs:
       - name: Build
         run: make build
 
-      - name: Make copy
-        run: cp api api_copy
-
-      - name: debug
-        working-directory: ./
-        run: ls -al
-
       - name: Copy Files
         run: |
           mkdir  artifacts
@@ -129,12 +122,16 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
+      - uses: actions/download-artifact@v2
+        with:
+          name: api
+          path: artifacts
       - name: debug_pre
         working-directory: ./
         run: ls -al
       - name: Zip
         working-directory: ./
-        run: zip -j deploy.zip api_copy
+        run: zip -j deploy.zip api
       - name: debug_after
         working-directory: ./
         run: ls -al
