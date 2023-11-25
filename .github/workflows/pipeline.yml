@@ -58,7 +58,7 @@ jobs:
         run: make build
 
       - name: Zip
-        working-directory: ./cmd/main
+        working-directory: cmd/main
         run: zip -j deploy.zip api
 
       - name: Copy Files
@@ -127,5 +127,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
       - name: Upload Zip
-        working-directory: ./cmd/main
+        working-directory: cmd/main
         run: aws lambda update-function-code --function-name main --zip-file fileb://deploy.zip
