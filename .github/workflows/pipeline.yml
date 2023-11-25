@@ -57,6 +57,13 @@ jobs:
       - name: Build
         run: make build
 
+      - name: Make copy
+        run: cp api api_copy
+
+      - name: debug
+        working-directory: ./
+        run: ls -al
+
       - name: Copy Files
         run: |
           mkdir  artifacts
@@ -124,7 +131,7 @@ jobs:
           aws-region: eu-central-1
       - name: Zip
         working-directory: ./
-        run: zip -j deploy.zip api
+        run: zip -j deploy.zip api_copy
       - name: debug
         working-directory: ./
         run: ls -al
