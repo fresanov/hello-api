@@ -126,15 +126,15 @@ jobs:
         with:
           name: api
           path: artifacts/api
+      - name: move_artifacts
+        working-directory: ./
+        run: mv artifacts/api .
       - name: debug_pre
         working-directory: ./
         run: ls -al
-      - name: debug_artifacts
-        working-directory: ./
-        run: mv artifacts/api .
       - name: Zip
         working-directory: ./
-        run: zip -j deploy.zip artifacts/api
+        run: zip -j deploy.zip api
       - name: debug_after
         working-directory: ./
         run: ls -al
