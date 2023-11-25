@@ -131,7 +131,7 @@ jobs:
         run: ls -al
       - name: debug_artifacts
         working-directory: ./
-        run: ls -al artifacts
+        run: mv artifacts/api .
       - name: Zip
         working-directory: ./
         run: zip -j deploy.zip artifacts/api
