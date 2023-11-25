@@ -57,6 +57,10 @@ jobs:
       - name: Build
         run: make build
 
+      - name: debug
+        working-directory: ./
+        run: ls -al
+
       - name: Copy Files
         run: |
           mkdir  artifacts
@@ -125,10 +129,6 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: api
-          path: artifacts/api
-      - name: move_artifacts
-        working-directory: ./
-        run: mv artifacts/api .
       - name: debug_pre
         working-directory: ./
         run: ls -al
