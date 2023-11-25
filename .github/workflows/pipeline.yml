@@ -57,6 +57,10 @@ jobs:
       - name: Build
         run: make build
 
+      - name: Zip
+        working-directory: ./cmd/main
+        run: zip -j deploy.zip api
+
       - name: Copy Files
         run: |
           mkdir  artifacts
@@ -122,5 +126,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
-      - id: test
-        run: curl "${{ steps.deploy.outputs.url }}/hello"
+      - name: Upload Zip
+        working-directory: ./cmd/main
+        run: aws lambda update-function-code --function-name main --zip-file fileb://deploy.zip
