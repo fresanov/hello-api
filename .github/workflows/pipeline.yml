@@ -140,4 +140,4 @@ jobs:
         run: ls -al
       - name: Upload Zip
         working-directory: ./
-        run: aws lambda update-function-code --function-name main --zip-file fileb://deploy.zip
+        run: aws lambda update-function-code --function-name helloApi --zip-file fileb://deploy.zip
