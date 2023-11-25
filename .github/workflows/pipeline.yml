@@ -128,4 +128,4 @@ jobs:
           aws-region: eu-central-1
       - name: Upload Zip
         working-directory: ./
-        run: aws lambda update-function-code --function-name main --zip-file fileb://deploy.zip
+        run: aws lambda update-function-code --function-name main --zip-file fileb:///deploy.zip
