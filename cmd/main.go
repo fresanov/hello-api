@@ -1,27 +1,15 @@
 package main
 
 import (
-	"context"
+	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/awslabs/aws-lambda-go-api-proxy/httpadapter"
+	"github.com/awslabs/aws-lambda-go-api-proxy/gorillamux"
 	"github.com/fresanov/hello-api/handlers/rest"
+	"github.com/gorilla/mux"
 )
-
-var httpLambda *httpadapter.HandlerAdapter
-
-func init() {
-	http.HandleFunc("/hello", rest.TranslateHandler)
-
-	httpLambda = httpadapter.New(http.DefaultServeMux)
-}
-
-func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-
-	return httpLambda.ProxyWithContext(ctx, req)
-}
 
 func main() {
 
@@ -35,7 +23,15 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(addr, mux)) */
 
-	lambda.Start(Handler)
+	router := mux.NewRouter()
+	router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Not found", r.RequestURI)
+		http.Error(w, fmt.Sprintf("Not found: %s", r.RequestURI), http.StatusNotFound)
+	})
+	router.HandleFunc("/hello", rest.TranslateHandler).Methods("GET")
+	adapter := gorillamux.NewV2(router)
+
+	lambda.Start(adapter.ProxyWithContext)
 }
 
 type Resp struct {
