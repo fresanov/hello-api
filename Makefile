@@ -16,7 +16,7 @@ init-go:
 	echo 'export PATH=$$PATH:$${HOME}/go/bin' >> $${HOME}/.bashrc
 
 build:
-	go build -o api cmd/main.go
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o api cmd/main.go
 
 test:
 	go test ./... -coverprofile=coverage.out              
