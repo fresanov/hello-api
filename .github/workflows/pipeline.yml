@@ -141,3 +141,20 @@ jobs:
       - name: Upload Zip
         working-directory: ./
         run: aws lambda update-function-code --function-name helloApi --zip-file fileb://deploy.zip
+  deploy-paas:
+    name: Deploy PaaS
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up AWS CLI
+        uses: aws-actions/aws-cli@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: eu-central-1
+      - name: Deploy to Elastic Beanstalk
+        run: eb deploy api --application-name hello-api --environment development --version-label latest
