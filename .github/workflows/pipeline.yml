@@ -124,7 +124,7 @@ jobs:
           entry_point: Translate
           runtime: go116
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}y
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
       - uses: actions/download-artifact@v2
         with:
