@@ -22,9 +22,17 @@ jobs:
         run: make check-format
       - name: Vet
         run: go vet ./...
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint
+        uses: golangci/golangci-lint-action@v2
   test:
     needs:
       - vet
+      - lint
     name: Test Application
     runs-on: ubuntu-latest
     steps:
