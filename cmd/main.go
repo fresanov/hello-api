@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/fresanov/hello-api/handlers"
 	"github.com/fresanov/hello-api/handlers/rest"
@@ -17,7 +18,13 @@ func main() {
 	//adapter := gorillamux.NewV2(router)
 	//lambda.Start(adapter.ProxyWithContext)
 
-	err := http.ListenAndServe(":8080", router)
+	server := &http.Server{
+		Addr:              ":8080",
+		ReadHeaderTimeout: 3 * time.Second,
+		Handler:           router,
+	}
+
+	err := server.ListenAndServe()
 	if err != nil {
 		log.Fatalln("There's an error with the server", err)
 	}
