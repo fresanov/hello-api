@@ -26,4 +26,7 @@ coverage:
 	awk '{print ((int($$3) > 80) != 1) }'                
 
 report:
-	go tool cover -html=coverage.out -o cover.html 
+	go tool cover -html=coverage.out -o cover.html
+
+check-format:
+  test -z $$(go fmt ./...)
