@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/awslabs/aws-lambda-go-api-proxy/gorillamux"
+	"log"
+	"net/http"
+
 	"github.com/fresanov/hello-api/handlers"
 	"github.com/fresanov/hello-api/handlers/rest"
 	"github.com/gorilla/mux"
@@ -13,9 +14,13 @@ func main() {
 	router.HandleFunc("/hello", rest.TranslateHandler).Methods("GET")
 	router.HandleFunc("/health", handlers.HealthCheck).Methods("GET")
 
-	adapter := gorillamux.NewV2(router)
+	//adapter := gorillamux.NewV2(router)
+	//lambda.Start(adapter.ProxyWithContext)
 
-	lambda.Start(adapter.ProxyWithContext)
+	err := http.ListenAndServe(":8080", router)
+	if err != nil {
+		log.Fatalln("There's an error with the server", err)
+	}
 }
 
 type Resp struct {
