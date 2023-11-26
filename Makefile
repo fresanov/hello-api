@@ -1,8 +1,8 @@
 GO_VERSION :=1.18
  
-.PHONY: install-go init-go install-lint                                         
+.PHONY: install-go init-go install-lint copy-hooks                                         
  
-setup: install-go init-go install-lint                                      
+setup: install-go init-go install-lint copy-hooks                                      
  
  
 #TODO add MacOS support
@@ -38,3 +38,7 @@ install-lint:
 
 lint:
 	golangci-lint run
+
+copy-hooks:
+	chmod +x scripts/hooks/*      
+	cp -r scripts/hooks .git/.
