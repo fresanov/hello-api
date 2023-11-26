@@ -1,3 +1,4 @@
+// Package translation defines logic for translating word into different languages
 package translation
 
 import (

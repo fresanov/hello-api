@@ -1,3 +1,4 @@
+// Package rest defines REST API endpoints handlers
 package rest
 
 import (
