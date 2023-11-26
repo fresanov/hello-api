@@ -8,9 +8,23 @@ on:
     branches:
       - main
 jobs:
+  vet:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.18
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+      - name: Run Format Check
+        run: make check-format
+      - name: Vet
+        run: go vet ./...
   test:
     needs:
-      - format-check
+      - vet
     name: Test Application
     runs-on: ubuntu-latest
     steps:
@@ -47,18 +61,6 @@ jobs:
 
       - name: Run Test
         run: go test ./...
-  format-check:
-    name: Check formatting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Go 1.x
-        uses: actions/setup-go@v2
-        with:
-          go-version: ^1.18
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
-      - name: Run Format Check
-        run: make check-format
   build:
     name: Build App
     runs-on: ubuntu-latest
