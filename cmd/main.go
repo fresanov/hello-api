@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/fresanov/hello-api/handlers"
 	"github.com/fresanov/hello-api/handlers/rest"
@@ -18,11 +16,6 @@ func main() {
 
 	//adapter := gorillamux.NewV2(router)
 	//lambda.Start(adapter.ProxyWithContext)
-
-	addr := fmt.Sprintf(":%s", os.Getenv("PORT"), "error")
-	if addr == ":" {
-		addr = ":8080"
-	}
 
 	err := http.ListenAndServe(":8080", router)
 	if err != nil {
