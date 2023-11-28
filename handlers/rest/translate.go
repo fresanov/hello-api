@@ -1,3 +1,4 @@
+// Package rest defined rest handlers
 package rest
 
 import (
@@ -44,7 +45,6 @@ func (t *TranslateHandler) TranslateHandler(w http.ResponseWriter, r *http.Reque
 	word := strings.ReplaceAll(r.URL.Path, "/", "")
 	translation := t.service.Translate(word, language)
 	if translation == "" {
-		language = ""
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
