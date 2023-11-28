@@ -8,7 +8,7 @@ import (
 	"github.com/fresanov/hello-api/handlers/rest"
 )
 
-// Verifies that the struct we are building satisfies the interface. This will cause a compile-time error if not satisfied
+// Verifies that the struct we are building satisfies the interface. This will cause a compile-time error if not satisfied.
 var _ rest.Translator = &RemoteService{}
 
 // RemoteService will allow for external calls to existing service for translations.
