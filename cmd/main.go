@@ -7,12 +7,16 @@ import (
 
 	"github.com/fresanov/hello-api/handlers"
 	"github.com/fresanov/hello-api/handlers/rest"
+	"github.com/fresanov/hello-api/translation"
 	"github.com/gorilla/mux"
 )
 
 func main() {
 	router := mux.NewRouter()
-	router.HandleFunc("/hello", rest.TranslateHandler).Methods("GET")
+
+	translationService := translation.NewStaticService()
+	translateHandler := rest.NewTranslateHandler(translationService)
+	router.HandleFunc("/hello", translateHandler.TranslateHandler).Methods("GET")
 	router.HandleFunc("/health", handlers.HealthCheck).Methods("GET")
 
 	//adapter := gorillamux.NewV2(router)
